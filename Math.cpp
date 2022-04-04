@@ -139,7 +139,7 @@ namespace MATH
          * @return double 
          */
         double Log10(double number) {
-            return ln(number)/ LN10;
+            return ln(number) / LN10;
         }
 
         /**
@@ -292,7 +292,7 @@ namespace MATH
             else if (result > -1e-4 && result < 0) {
                 return 0;
             }
-            
+
             return result;
         }
 
