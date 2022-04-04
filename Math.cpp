@@ -1,6 +1,7 @@
 // Omar Estietie
 
 #include <iostream>
+#include <math.h>
 
 namespace MATH
 {
@@ -9,6 +10,26 @@ namespace MATH
     private:
         double __MINIMUMVALUE = 2147483647;
         double __MAXIMUMVALUE = -2147483647;
+        long double POW(long double base, long double expo) {
+            long double result = 1;
+            if (expo < 0) {
+                while (expo != 0)
+                {
+                    result = result * (1 / base);
+                    expo++;
+                }
+                return (long double)result;
+                }
+
+                else {
+                    while (expo != 0)
+                    {
+                        result = result * base;
+                        expo--;
+                    }
+                    return (long double)result;
+                }
+        }
 
     public:
         
@@ -114,6 +135,12 @@ namespace MATH
          * @return double 
          */
         double ln(double number) {
+            if (number == 0) {
+                return -1 * INFINITY;
+            }
+            if (number == INFINITY) {
+                return INFINITY;
+            }
             double oldSum = 0.0;
             double xmlxpl = (number - 1) / (number + 1);
             double xmlxpl2 = xmlxpl * xmlxpl;
@@ -130,7 +157,7 @@ namespace MATH
                 sum += frac / denom;
             }
             return 2.0 * sum;
-        }
+        }  
 
         /**
          * @brief A function that returns the value of log10 of any number.
@@ -149,7 +176,7 @@ namespace MATH
          * @return double 
          */
         double Log2(double number) {
-            return ln(number)/ LN2;
+            return ln(number) / LN2;
         }
 
         /**
@@ -164,13 +191,13 @@ namespace MATH
         }
 
         /**
-         * @brief A function that returns the value of a power function.
+         * @brief A function that returns the value of a Power function.
          * 
          * @param base 
          * @param expo 
          * @return long double 
          */
-        long double Pow(long double base, long double expo) {
+        long double Pow(long double base, long double expo){
             long double result = 1;
             if (expo < 0) {
                 while (expo != 0)
@@ -181,12 +208,12 @@ namespace MATH
                 return (long double)result;
             }
 
-            else {
-                while (expo != 0)
-                {
-                    result = result * base;
-                    expo--;
-                }
+                else {
+                    while (expo != 0)
+                    {
+                        result = result * base;
+                        expo--;
+                    }
                 return (long double)result;
             }
         }
@@ -198,23 +225,8 @@ namespace MATH
          * @return long double 
          */
         long double Exp(double __NUM) {
-            long double result = 1;
-            if (__NUM < 0) {
-                while (__NUM != 0)
-                {
-                    result = result * (1 / E);
-                    __NUM++;
-                }
-                return result;			
-            }
-            else {
-                while (__NUM != 0)
-                {
-                    result = result * E;
-                    __NUM--;
-                }
-                return result;		
-            }
+            long double result = 1 + __NUM + (Pow(__NUM, 2) / Fact(2)) + (Pow(__NUM, 3) / Fact(3)) + (Pow(__NUM, 4) / Fact(4)) + (Pow(__NUM, 5) / Fact(5)) + (Pow(__NUM, 6) / Fact(6)) + (Pow(__NUM, 7) / Fact(7)) + (Pow(__NUM, 8) / Fact(8)) + (Pow(__NUM, 9) / Fact(9)) + (Pow(__NUM, 10) / Fact(10)) + (Pow(__NUM, 11) / Fact(11)) + (Pow(__NUM, 12) / Fact(12)) + (Pow(__NUM, 13) / Fact(13)) + (Pow(__NUM, 14) / Fact(14)) + (Pow(__NUM, 15) / Fact(15)) + (Pow(__NUM, 16) / Fact(16)) + (Pow(__NUM, 17) / Fact(17)) + (Pow(__NUM, 18) / Fact(18)) + (Pow(__NUM, 19) / Fact(19)) + (Pow(__NUM, 20) / Fact(20));
+            return result;
         }
 
         /**
@@ -410,6 +422,17 @@ namespace MATH
             return result;
         }
 
+        double Arcsin(double __NUM) {
+            // double __NUM = __NUMUBER * 180 / Pi;
+            // if (__NUM > 1 || __NUM < -1) {
+            //     return 0;
+            // }
+            
+            double result = __NUM + (Pow(__NUM, 3) / 6) + (3 * Pow(__NUM, 5) / Fact(5)) + (3 * 5 * Pow(__NUM, 7) / Fact(7)) + (3 * 5 * 7 * Pow(__NUM, 9) / Fact(9)) + (3 * 5 * 7 * 9 * Pow(__NUM, 11) / Fact(11)) + (3 * 5 * 7 * 9 * 11 * Pow(__NUM, 13) / Fact(13)) + (3 * 5 * 7 * 9 * 11 * 13 * Pow(__NUM, 15) / Fact(15)) + (3 * 5 * 7 * 9 * 11 * 13 * 15 * Pow(__NUM, 17) / Fact(17)) + (3 * 5 * 7 * 9 * 11 * 13 * 15 * 17 * Pow(__NUM, 19) / Fact(19)) + (3 * 5 * 7 * 9 * 11 * 13 * 15 * 17 * 19 * Pow(__NUM, 21) / Fact(21)); //+ (3 * 5 * 7 * 9 * 11 * 13 * 15 * 17 * 19 * 21 * Pow(__NUM, 23) / Fact(23)) + (3 * 5 * 7 * 9 * 11 * 13 * 15 * 17 * 19 * 21 * 23 * Pow(__NUM, 25) / Fact(25)); 
+            // double realResult = __NUM * 1.570797;
+            return result;
+        }
+        
         /**
          * @brief A funciton that returns the value after rounding a number, if it was 0.5 then it would be rounded into 1, if it was 0.4 it would be rounded into 0.
          * 
