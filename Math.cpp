@@ -12,13 +12,13 @@ namespace MATH
 
     public:
         
-        const double Pi        = 3.14159265358979;
-        const double E         = 2.71828182845904;
-        const double LN10      = 2.30258509299404;
-        const double LN2       = 0.69314718055994;
-        const double SQRT2     = 1.41421356237309;
-        const double LOG2E     = 1.44269504088896;
-        const double SQRT1_2   = 0.70710678118654;
+        const double Pi        =      3.14159265358979;
+        const double E         =      2.71828182845904;
+        const double LN10      =      2.30258509299404;
+        const double LN2       =      0.69314718055994;
+        const double SQRT2     =      1.41421356237309;
+        const double LOG2E     =      1.44269504088896;
+        const double SQRT1_2   =      0.70710678118654;
 
         /**
          * @brief A method to return the module of 2 integers, works as number % number2.
@@ -178,7 +178,7 @@ namespace MATH
                     result = result * (1 / base);
                     expo++;
                 }
-                return result;
+                return (long double)result;
             }
 
             else {
@@ -187,7 +187,7 @@ namespace MATH
                     result = result * base;
                     expo--;
                 }
-                return result;
+                return (long double)result;
             }
         }
 
@@ -224,79 +224,85 @@ namespace MATH
          * @return double 
          */
         double Cos(double __NUMBER) {
-            double __NUM = __NUMBER * Pi / 180;
-            double result = 1 - (Pow(__NUM, 2) / Fact(2)) + (Pow(__NUM, 4) / Fact(4)) - (Pow(__NUM, 6) / Fact(6)) + (Pow(__NUM, 8) / Fact(8)) - (Pow(__NUM, 10) / Fact(10)) + (Pow(__NUM, 12) / Fact(12)) - (Pow(__NUM, 14) / Fact(14)) + (Pow(__NUM, 16) / Fact(16)) - (Pow(__NUM, 18) / Fact(18)) + (Pow(__NUM, 20) / Fact(20));
-            for (int i = 1; i < 12; i++)
-            {
-                if (i % 2 == 0) {
-                    continue;
-                }
-                if (__NUM == (90 * i * Pi / 180))
-                {
-                    return 0;
-                }
-                
-                else if (__NUM == (270 * i * Pi / 180)) {
-                    return 0;
-                }
+            for (int i = 0; i < __MINIMUMVALUE && __NUMBER > 360; i++) {
+                if (__NUMBER > 360) {
+                    __NUMBER = __NUMBER - 360;
+                } 
             }
-            
-            for (int i = 0; i < 12; i++)
-            {
-                if (i % 2 != 0) {
-                    continue;
-                }
-                if (__NUM == (360 * i * Pi / 180)) {
-                    return 1;
-                }
-
-                else if (__NUM == (180 * i * Pi / 180)) {
+            double __NUM = __NUMBER * Pi / 180;
+            double result = 1 - (Pow(__NUM, 2) / Fact(2)) + (Pow(__NUM, 4) / Fact(4)) - (Pow(__NUM, 6) / Fact(6)) + (Pow(__NUM, 8) / Fact(8)) - (Pow(__NUM, 10) / Fact(10)) + (Pow(__NUM, 12) / Fact(12)) - (Pow(__NUM, 14) / Fact(14)) + (Pow(__NUM, 16) / Fact(16)) - (Pow(__NUM, 18) / Fact(18)) + (Pow(__NUM, 20) / Fact(20)); 
+            if (__NUMBER - (int)__NUMBER == 0) {
+                if ((int)__NUMBER % 180 == 0 && (int)__NUMBER % 270 != 0 && (int)__NUMBER % 360 != 0 && (int)__NUMBER > 0) {
                     return -1;
                 }
+                if ((int)__NUMBER % 270 == 0) {
+                    return 0;
+                }
+                if((int)__NUMBER % -180 == 0 && (int)__NUMBER < 0 && (int)__NUMBER % 360 != 0) {
+                    return 1;
+                }
+                if((int)__NUMBER % 360 == 0) {
+                    return 1;
+                }
             }
-            
+            if (result < 1e-4 && result > 0) {
+                return 0;
+            }
 
-            if(result > 1 || result < -1) {
+            else if (result > -1e-4 && result < 0) {
                 return 0;
             }
-            if(result < 1e-6 && result > 0) {
-                return 0;
-            }
+
             return result;
         }
 
         /**
          * @brief A function that returns the value of sinx (in degrees), works like sin(30).
          * 
-         * @param __NUM 
+         * @param __NUMBER 
          * @return double 
          */
-        double Sin(double __NUM) {
-            double cosSquared = Cos(__NUM) * Cos(__NUM);
-            double resultSquared = 1 - cosSquared;
-            double result = Sqrt(resultSquared);
-            if (__NUM - (int) __NUM == 0) {
-                if ((int) __NUM % 180 == 0) {
+        double Sin(double __NUMBER) {
+            for (int i = 0; i < __MINIMUMVALUE && __NUMBER > 360; i++) {
+                if (__NUMBER > 360) {
+                    __NUMBER = __NUMBER - 360;
+                } 
+            }
+            double __NUM = __NUMBER * Pi / 180;
+            double result = __NUM - (Pow(__NUM, 3) / Fact(3)) + (Pow(__NUM, 5) / Fact(5)) - (Pow(__NUM, 7) / Fact(7)) + (Pow(__NUM, 9) / Fact(9)) - (Pow(__NUM, 11) / Fact(11)) + (Pow(__NUM, 13) / Fact(13)) - (Pow(__NUM, 15) / Fact(15)) + (Pow(__NUM, 17) / Fact(17)) - (Pow(__NUM, 19) / Fact(19)) + (Pow(__NUM, 21) / Fact(21)); 
+
+            if (__NUMBER - (int)__NUMBER == 0) {
+                if ((int)__NUMBER % 180 == 0 && (int)__NUMBER % 270 != 0) {
                     return 0;
                 }
 
-                if ((int) __NUM % 270 == 0) {
+                if ((int)__NUMBER % 270 == 0 && (int)__NUMBER > 0 ) {
                     return -1;
-                } 
+                }
+
+                if ((int)__NUMBER % -270 == 0 && (int)__NUMBER < 0) {
+                    return 1;
+                }
             }
-            if (__NUM > 180 && __NUM < 360) {
-                return -1 * result;
+
+            if (result < 1e-4 && result > 0) {
+                return 0;
             }
-            return result; 
+
+            else if (result > -1e-4 && result < 0) {
+                return 0;
+            }
+            
+            return result;
         }
-        
+
         /**
          * @brief A function that returns the value of tanx (in degrees), works like tan(30).
          * 
          * @param __NUM 
          * @return double 
          */
-        double Tan(double __NUM) {
+        long double Tan(long double __NUM) {
             long double result = Sin(__NUM) / Cos(__NUM);
 
             return result;
