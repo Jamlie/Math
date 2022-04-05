@@ -1,6 +1,6 @@
 // Omar Estietie
 
-#include <iostream>
+// #include <iostream>
 #include <math.h>
 
 namespace MATH
@@ -8,6 +8,7 @@ namespace MATH
 
     class math {
     private:
+        const double __HUGE_NUMBER = 1e+300;
         double __MINIMUMVALUE = 2147483647;
         double __MAXIMUMVALUE = -2147483647;
         long double POW(long double base, long double expo) {
@@ -32,15 +33,28 @@ namespace MATH
         }
 
     public:
-        
-        const double Pi        =      3.14159265358979;
-        const double E         =      2.71828182845904;
-        const double LN10      =      2.30258509299404;
-        const double LN2       =      0.69314718055994;
-        const double SQRT2     =      1.41421356237309;
-        const double LOG2E     =      1.44269504088896;
-        const double SQRT1_2   =      0.70710678118654;
+        const double Infinity       =      __HUGE_NUMBER * __HUGE_NUMBER;
+        const double NaN            =      ((float)Infinity * 0.0F);
+        const double minInfinity    =      Infinity * -1;
+        const double Pi             =      3.14159265358979;
+        const double E              =      2.71828182845904;
+        const double LN10           =      2.30258509299404;
+        const double LN2            =      0.69314718055994;
+        const double SQRT2          =      1.41421356237309;
+        const double LOG2E          =      1.44269504088896;
+        const double SQRT1_2        =      0.70710678118654;
 
+
+        /**
+         * @brief A function that determines if something is not a number/ 
+         * 
+         * @param __NUMBER 
+         * @return int 
+         */
+        int isNaN(long double __NUMBER) {
+            if (__NUMBER != NaN) return 0;
+            return 1;
+        }
         /**
          * @brief A method to return the module of 2 integers, works as number % number2.
          * 
