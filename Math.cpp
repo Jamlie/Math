@@ -3,17 +3,15 @@
 #include <iostream>
 using std::string;
 using std::stringstream;
-#include <math.h>
 
 namespace MATH
 {
 
     class math {
     private:
-        const double __HUGE_NUMBER = 1e+300;
+        const double __HUGE_NUMBER = 1e+308;
         double __MINIMUMVALUE = 2147483647;
         double __MAXIMUMVALUE = -2147483647;
-        double convertToString;
 
         /**
          * @brief A function to get the nth-root of a number.
@@ -23,6 +21,12 @@ namespace MATH
          * @return long double 
          */
         long double NTH_ROOT(long double __NUMBER_UNDER_ROOT__, long double __BASE) {
+            if (__NUMBER_UNDER_ROOT__ == NaN) return NaN;
+            if (__NUMBER_UNDER_ROOT__ == Infinity) return Infinity;
+            if (__BASE == Infinity && __NUMBER_UNDER_ROOT__ != Infinity) return 0;
+            if (__BASE == Infinity && __NUMBER_UNDER_ROOT__ == Infinity) return NaN;
+            
+            if (__NUMBER_UNDER_ROOT__ == 0) return 0;
             if (__BASE - (int)__BASE == 0 && (int)__BASE % 2 == 0 && __NUMBER_UNDER_ROOT__ < 0) return NaN;
             if (__BASE - (int)__BASE == 0 && (int)__BASE % 2 != 0 && __NUMBER_UNDER_ROOT__ < 0) {
                 double __ANSWER = Exp(ln(-1 * __NUMBER_UNDER_ROOT__) / __BASE);
@@ -48,8 +52,8 @@ namespace MATH
 
     public:
 
-        const double Infinity       =      ((float)(__HUGE_NUMBER * __HUGE_NUMBER));
-        const double NaN            =      ((float)Infinity * 0.0F);
+        const float Infinity        =      ((float)(__HUGE_NUMBER * __HUGE_NUMBER));
+        const float NaN             =      ((float)Infinity * 0.0F);
         const double minInfinity    =      Infinity * -1;
         const double Pi             =      3.14159265358979;
         const double E              =      2.71828182845904;
@@ -67,6 +71,7 @@ namespace MATH
          * @return string
          */
         string toString(long double numberToString, string &convertedToString) {
+            if (numberToString == NaN || numberToString == Infinity || numberToString == minInfinity) return "Invalid";
             stringstream convertToString;
             convertToString << numberToString;
             convertToString >> convertedToString;
@@ -93,6 +98,10 @@ namespace MATH
          * @return int 
          */
         int Mod(int __NUM, int __NUMBER) {
+            if (__NUM == Infinity && __NUMBER != Infinity) return NaN;
+            if (__NUMBER == Infinity && __NUM != Infinity) return __NUM;
+            if (__NUM == Infinity && __NUMBER == Infinity) return NaN;
+            if (__NUM == NaN || __NUMBER == NaN) return NaN;
             int __RESULT = __NUM % __NUMBER;
             return __RESULT;
         }
@@ -135,17 +144,23 @@ namespace MATH
          * @return int 
          */
         int Ceil(double __CEIL) {
-            if (__CEIL - (int)__CEIL == 0) {
-                return __CEIL;
-            }
+            if (__CEIL - (int)__CEIL == 0) return __CEIL;
             else return Floor(__CEIL) + 1;
         }
 
-        long double Fact(long long __CEIL) {
-            if (__CEIL > 1) {
-                return __CEIL * Fact(__CEIL - 1);
-            }
-            else return 1;
+        /**
+         * @brief A function that returns the factorial of a number. 
+         * 
+         * @param __FACT 
+         * @return long double 
+         */
+        long double Fact(long long __FACT) {
+            if (__FACT == NaN) return 1;
+            if (__FACT == Infinity) return INFINITY;
+            if (__FACT == minInfinity) return NaN;
+            if (__FACT < 0) return NaN;
+            if (__FACT == 1 || __FACT == 0) return 1;
+            return __FACT * Fact(__FACT - 1);
         }
 
         /**
@@ -155,14 +170,16 @@ namespace MATH
          * @return double 
          */
         long double Sqrt(long double __BASE) {
-            if (__BASE < 0) return NaN;
+            if (__BASE == minInfinity) return NaN;
             if (__BASE == Infinity) return Infinity;
+            if (__BASE < 0) return NaN;
 
             long double __RESULT = NTH_ROOT(__BASE, 2);
             return __RESULT;
         }
 
         long double Cbrt(long double __BASE) {
+            if (__BASE == NaN) return NaN;
             if (__BASE == Infinity) return Infinity;
             if (__BASE == minInfinity) return minInfinity;
 
@@ -230,7 +247,6 @@ namespace MATH
             return ln(__NUM) / ln(__NUMBER);
         }
 
-        
 
         /**
          * @brief A function that returns the value of a Power function.
@@ -240,11 +256,26 @@ namespace MATH
          * @return long double 
          */
         long double Pow(long double __BASE, long double __EXPO){
+            if (__BASE == minInfinity && __EXPO == minInfinity) return 0;
+            if (__BASE == Infinity && __EXPO == 0) return NaN;
+            if (__BASE == 1 && __EXPO == Infinity) return NaN;
+            if (__BASE == 0 && __EXPO == 0) return NaN;
+            if (__EXPO == Infinity) return Infinity;
+            if (__EXPO == minInfinity) return 0;
+            if (__BASE == Infinity) return Infinity;
+            if (__BASE == 0 && __EXPO == 0) return NaN;
+            if (__BASE == minInfinity) {
+                if (__EXPO - (int)__EXPO == 0) {
+                    if ((int)__EXPO % 2 == 0) return Infinity;
+                    return minInfinity;
+                }
+            }
+
+
             if (__EXPO - (int)__EXPO != 0) {
                 if (__BASE < 0) {
                     long double __SEMIRESULT = __EXPO * ln(-1 * __BASE);
                     long double __RESULT = Exp(__SEMIRESULT);
-                    // if (Ceil(__RESULT) - __RESULT < 9e-4 && Ceil(__RESULT) - __RESULT > 0) return Floor(__RESULT); 
                     return -__RESULT;
                 }
                 
@@ -252,13 +283,11 @@ namespace MATH
                     __BASE = (int)__BASE;
                     long double __SEMIRESULT = __EXPO * ln(__BASE);
                     long double __RESULT = Exp(__SEMIRESULT);
-                    // if (Ceil(__RESULT) - __RESULT < 9e-4 && Ceil(__RESULT) - __RESULT > 0) return Ceil(__RESULT); 
                     return __RESULT;
                 }
 
                 long double __SEMIRESULT = __EXPO * ln(__BASE);
                 long double __RESULT = Exp(__SEMIRESULT);
-                // if (Ceil(__RESULT) - __RESULT < 9e-4 && Ceil(__RESULT) - __RESULT > 0) return Ceil(__RESULT); 
                 return __RESULT;
                 
             }
@@ -292,6 +321,10 @@ namespace MATH
          * @return long double 
          */
         long double Exp(double __NUM) {
+            if (__NUM == Infinity) return Infinity;
+            if (__NUM == minInfinity) return 0;
+            if (__NUM == NaN) return NaN;
+
             long double __SEMIRESULT = 0;
             for (int i = 1; i <= 35; i++) {
                 long double POWER = Pow(__NUM, i);
@@ -309,6 +342,8 @@ namespace MATH
          * @return double 
          */
         double Cos(double __NUMBER) {
+            if (__NUMBER == NaN || __NUMBER == Infinity || __NUMBER == minInfinity) return NaN;
+
             for (int i = 0; i < __MINIMUMVALUE && __NUMBER > 360; i++) {
                 if (__NUMBER > 360) {
                     __NUMBER = __NUMBER - 360;
@@ -355,6 +390,8 @@ namespace MATH
          * @return double 
          */
         double Sin(double __NUMBER) {
+            if (__NUMBER == NaN || __NUMBER == Infinity || __NUMBER == minInfinity) return NaN;
+
             for (int i = 0; i < __MINIMUMVALUE && __NUMBER > 360; i++) {
                 if (__NUMBER > 360) {
                     __NUMBER = __NUMBER - 360;
@@ -414,8 +451,11 @@ namespace MATH
          * @return double 
          */
         double Sec(double __NUM) {
-            long double __RESULT = 1 / Cos(__NUM);
+            if (__NUM == Infinity) return 0;
+            if (__NUM == minInfinity) return 0;
+            if (__NUM == NaN) return NaN;
 
+            long double __RESULT = 1 / Cos(__NUM);
             return __RESULT;
         }
 
@@ -426,8 +466,11 @@ namespace MATH
          * @return double 
          */
         double Csc(double __NUM) {
-            long double __RESULT = 1 / Sin(__NUM);
+            if (__NUM == Infinity) return 0;
+            if (__NUM == minInfinity) return 0;
+            if (__NUM == NaN) return NaN;
 
+            long double __RESULT = 1 / Sin(__NUM);
             return __RESULT;
         }
 
@@ -438,8 +481,11 @@ namespace MATH
          * @return double 
          */
         double Cot(double __NUM) {
-            long double __RESULT = 1 / Tan(__NUM);
+            if (__NUM == Infinity) return 0;
+            if (__NUM == minInfinity) return 0;
+            if (__NUM == NaN) return NaN;
 
+            long double __RESULT = 1 / Tan(__NUM);
             return __RESULT;
         }
 
@@ -450,6 +496,7 @@ namespace MATH
          * @return double 
          */
         double Asin(double __NUMBER) {
+            if (__NUMBER == NaN) return NaN;
             if (__NUMBER > 1 || __NUMBER < -1) return NaN;
             if (__NUMBER == 1) return 90;
             if (__NUMBER == -1) return -90;
@@ -487,6 +534,7 @@ namespace MATH
          * @return long double 
          */
         long double Atan(double __NUMBER) {
+            if (__NUMBER == NaN) return NaN;
             if (__NUMBER == Infinity) return 90;
             if (__NUMBER == minInfinity) return -90;
             if (__NUMBER == 1) return 45;
@@ -511,6 +559,9 @@ namespace MATH
          * @return long double 
          */
         long double Sinh(long double __NUM) {
+            if (__NUM == Infinity) return Infinity;
+            if (__NUM == minInfinity) return minInfinity;
+            if (__NUM == NaN) return NaN;
             long double __RESULT = (Exp(__NUM) - Exp(-1 * __NUM)) / 2;
             return __RESULT;
         } 
@@ -522,6 +573,9 @@ namespace MATH
          * @return long double 
          */
         long double Cosh(long double __NUM) {
+            if (__NUM == Infinity) return Infinity;
+            if (__NUM == minInfinity) return minInfinity;
+            if (__NUM == NaN) return NaN;
             long double __RESULT = (Exp(__NUM) + Exp(-1 * __NUM)) / 2;
             return __RESULT;
         } 
@@ -533,6 +587,9 @@ namespace MATH
          * @return long double 
          */
         long double Tanh(long double __NUM) {
+            if (__NUM == Infinity) return Infinity;
+            if (__NUM == minInfinity) return minInfinity;
+            if (__NUM == NaN) return NaN;
             long double __RESULT = Sinh(__NUM) / Cosh(__NUM);
             return __RESULT;
         }
@@ -544,6 +601,9 @@ namespace MATH
          * @return long double 
          */
         long double Sech(long double __NUM) {
+            if (__NUM == Infinity) return 0;
+            if (__NUM == minInfinity) return 0;
+            if (__NUM == NaN) return NaN;            
             long double __RESULT = 1 / Cosh(__NUM);
             return __RESULT;
         }
@@ -555,6 +615,9 @@ namespace MATH
          * @return long double 
          */
         long double Csch(long double __NUM) {
+            if (__NUM == Infinity) return 0;
+            if (__NUM == minInfinity) return 0;
+            if (__NUM == NaN) return NaN;
             long double __RESULT = 1 / Sinh(__NUM);
             return __RESULT;
         }
@@ -566,6 +629,9 @@ namespace MATH
          * @return long double 
          */
         long double Coth(long double __NUM) {
+            if (__NUM == Infinity) return 0;
+            if (__NUM == minInfinity) return 0;
+            if (__NUM == NaN) return NaN;     
             long double __RESULT = 1 / Tanh(__NUM);
             return __RESULT;
         }
@@ -577,6 +643,10 @@ namespace MATH
          * @return long double 
          */
         long double Round(long double __NUM) {
+            if (__NUM == Infinity) return Infinity;
+            if (__NUM == minInfinity) return minInfinity;
+            if (__NUM == NaN) return NaN;
+
             if (__NUM - (int) __NUM == 0) {
                 return __NUM;
             }
@@ -723,6 +793,10 @@ namespace MATH
          * @param isPrimeInt  
          */
         bool isPrime(int __IS_PRIME_INT) {
+            if (__IS_PRIME_INT == Infinity) return 0;
+            if (__IS_PRIME_INT == minInfinity) return 0;
+            if (__IS_PRIME_INT == NaN) return NaN;
+
             if (__IS_PRIME_INT == 0) return 0;
             if (__IS_PRIME_INT == 1) return 0;
             int i;
