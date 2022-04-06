@@ -22,8 +22,13 @@ namespace MATH
          * @param __BASE 
          * @return long double 
          */
-        long double NTH_ROOT(long double __NUMBER, long double __BASE) {
-            double __ANSWER = Exp(ln(__NUMBER) / __BASE);
+        long double NTH_ROOT(long double __NUMBER_UNDER_ROOT__, long double __BASE) {
+            if (__BASE - (int)__BASE == 0 && (int)__BASE % 2 == 0 && __NUMBER_UNDER_ROOT__ < 0) return NaN;
+            if (__BASE - (int)__BASE == 0 && (int)__BASE % 2 != 0 && __NUMBER_UNDER_ROOT__ < 0) {
+                double __ANSWER = Exp(ln(-1 * __NUMBER_UNDER_ROOT__) / __BASE);
+                return -__ANSWER;
+            }
+            double __ANSWER = Exp(ln(__NUMBER_UNDER_ROOT__) / __BASE);
             return __ANSWER;
         }
 
@@ -42,7 +47,6 @@ namespace MATH
         
 
     public:
-
 
         const double Infinity       =      ((float)(__HUGE_NUMBER * __HUGE_NUMBER));
         const double NaN            =      ((float)Infinity * 0.0F);
