@@ -637,6 +637,40 @@ namespace MATH
         }
         
         /**
+         * @brief A function that returns the value of sinh inverse.
+         * 
+         * @param __NUM 
+         * @return long double 
+         */
+        long double Asinh(long double __NUM) {
+            long double RESULT = ln(__NUM + Sqrt(Pow(__NUM, 2) + 1));
+            return RESULT;
+        }
+
+        /**
+         * @brief A function that returns the value of cosh inverse.
+         * 
+         * @param __NUM 
+         * @return long double 
+         */
+        long double Acosh(long double __NUM) {
+            long double RESULT = ln(__NUM + Sqrt(Pow(__NUM, 2) - 1));
+            return RESULT;
+        }
+
+        /**
+         * @brief A function that returns the value of tanh inverse, its range is [-1, 1).
+         * 
+         * @param __NUM A number between [-1, 1).
+         * @return long double 
+         */
+        long double Atanh(long double __NUM) {
+            if (__NUM >= 1 || __NUM < -1) return NaN;
+            long double RESULT = 0.5 * (ln((1 + __NUM) / (1 - __NUM)));
+            return RESULT;
+        }
+
+        /**
          * @brief A funciton that returns the value after rounding a number, if it was 0.5 then it would be rounded into 1, if it was 0.4 it would be rounded into 0.
          * 
          * @param __NUM 
