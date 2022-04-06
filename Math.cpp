@@ -1,7 +1,7 @@
 // Omar Estietie
 
 #include <iostream>
-using std:: string;
+using std::string;
 using std::stringstream;
 #include <math.h>
 
@@ -439,6 +439,67 @@ namespace MATH
             return __RESULT;
         }
 
+        /**
+         * @brief A function that returns the value of sin inverse.
+         * 
+         * @param __NUMBER A number between -1 and 1.
+         * @return double 
+         */
+        double Asin(double __NUMBER) {
+            if (__NUMBER > 1 || __NUMBER < -1) return NaN;
+            if (__NUMBER == 1) return 90;
+            if (__NUMBER == -1) return -90;
+            if (__NUMBER == 0) return 0;
+
+            int i;
+            double __RESULT;
+            double __SEMIRESULT = 0;
+            for (i = 0; i < 300; i++) {
+                long double FACT_1 = Fact((2 * i));
+                long double DENOM_1 = Pow(4, i);
+                long double DENOM_2 = Pow(Fact(i), 2);
+                long double DENOM_3 = (2 * i + 1);
+                long double NUMERATOR = Pow(__NUMBER, (2 * i + 1));
+                __SEMIRESULT += (FACT_1 * NUMERATOR) / (DENOM_1 * DENOM_2 * DENOM_3);
+            }
+            __RESULT = __SEMIRESULT * 180 / Pi;
+            return __RESULT;
+        }
+
+        /**
+         * @brief A function that returns the cos inverse value.
+         * 
+         * @param __NUMBER A number between -1 and .
+         * @return double 
+         */
+        double Acos(double __NUMBER) {
+            return 90 - Asin(__NUMBER);
+        }
+
+        /**
+         * @brief A function that returns the tan inverse value.
+         * 
+         * @param __NUMBER
+         * @return long double 
+         */
+        long double Atan(double __NUMBER) {
+            if (__NUMBER == Infinity) return 90;
+            if (__NUMBER == minInfinity) return -90;
+            if (__NUMBER == 1) return 45;
+
+            int i;
+            long double __RESULT;
+            long double __SEMIRESULT = 0;
+            for (i = 0; i < 700; i++) {
+                long double __NUMER_1 = Pow(-1, i);
+                long double __NUMER_2 = Pow(__NUMBER, 2 * i + 1);
+                long double __DENOM__ = 2 * i + 1;
+                __SEMIRESULT += ((__NUMER_1 * __NUMER_2) / __DENOM__);
+            }
+            __RESULT = __SEMIRESULT * 180 / Pi;
+            return __RESULT;            
+        }
+       
         /**
          * @brief A function that returns the hyperbolic sinx.
          * 
