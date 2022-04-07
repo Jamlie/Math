@@ -17,6 +17,3 @@ Then you can do something like:
 math Math;
 ```
 To start using those methods
-
-
-**It is still under development**
