@@ -6,7 +6,6 @@ using std::stringstream;
 
 namespace MATH
 {
-
     class math {
     private:
         const double __HUGE_NUMBER = 1e+308;
@@ -164,10 +163,10 @@ namespace MATH
         }
 
         /**
-         * @brief A function that returns the square root of anu number.
+         * @brief A function that returns the square root of any number.
          * 
          * @param __BASE 
-         * @return double 
+         * @return long double 
          */
         long double Sqrt(long double __BASE) {
             if (__BASE == minInfinity) return NaN;
@@ -178,6 +177,12 @@ namespace MATH
             return __RESULT;
         }
 
+        /**
+         * @brief A function that returns the cube root of any number.
+         * 
+         * @param __BASE 
+         * @return long double 
+         */
         long double Cbrt(long double __BASE) {
             if (__BASE == NaN) return NaN;
             if (__BASE == Infinity) return Infinity;
