@@ -17,3 +17,8 @@ Then you can do something like:
 math Math;
 ```
 To start using those methods
+
+Use
+```
+Math.STRING.(To get some string methods)
+```
