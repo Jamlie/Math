@@ -1,16 +1,44 @@
 // Omar Estietie
 
 #include <iostream>
+#include <sstream>
 using std::string;
 using std::stringstream;
 
 namespace MATH
 {
+    class Str {
+    private: 
+        const double __HUGE_NUMBER  =      1e+308;
+        const float Infinity        =      ((float)(__HUGE_NUMBER * __HUGE_NUMBER));
+        const float NaN             =      ((float)Infinity * 0.0F);
+        const double minInfinity    =      Infinity * -1;
+    public:
+        /**
+        * @brief Convert a number to a string.
+        * 
+        * @param numberToString The number that the user needs to turn into a string. 
+        * @param convertedToString The name of a variable that will contain the new string value.
+        * @return string
+        */
+        string toString(long double numberToString, string &convertedToString) {
+        if (numberToString == NaN || numberToString == Infinity || numberToString == minInfinity) return "Invalid";
+            stringstream convertToString;
+            convertToString << numberToString;
+            convertToString >> convertedToString;
+            return convertedToString;
+        }
+    };
+
+    /**
+     * @brief A math-class that can be used to do math operation.
+     * 
+     */
     class math {
     private:
         const double __HUGE_NUMBER = 1e+308;
-        double __MINIMUMVALUE = 2147483647;
-        double __MAXIMUMVALUE = -2147483647;
+        double __MINIMUMVALUE      = 2147483647;
+        double __MAXIMUMVALUE      = -2147483647;
 
         /**
          * @brief A function to get the nth-root of a number.
@@ -62,21 +90,9 @@ namespace MATH
         const double LOG2E          =      1.44269504088896;
         const double SQRT1_2        =      0.70710678118654;
 
-        /**
-         * @brief Convert a number to a string.
-         * 
-         * @param numberToString The number that the user needs to turn into a string. 
-         * @param convertedToString The name of a variable that will contain the new string value.
-         * @return string
-         */
-        string toString(long double numberToString, string &convertedToString) {
-            if (numberToString == NaN || numberToString == Infinity || numberToString == minInfinity) return "Invalid";
-            stringstream convertToString;
-            convertToString << numberToString;
-            convertToString >> convertedToString;
-            return convertedToString;
-        }
-
+        
+        Str STRING;
+        
 
         /**
          * @brief A function that determines if something is not a number/ 
@@ -155,7 +171,7 @@ namespace MATH
          */
         long double Fact(long long __FACT) {
             if (__FACT == NaN) return 1;
-            if (__FACT == Infinity) return INFINITY;
+            if (__FACT == Infinity) return Infinity;
             if (__FACT == minInfinity) return NaN;
             if (__FACT < 0) return NaN;
             if (__FACT == 1 || __FACT == 0) return 1;
@@ -163,10 +179,10 @@ namespace MATH
         }
 
         /**
-         * @brief A function that returns the square root of any number.
+         * @brief A function that returns the square root of anu number.
          * 
          * @param __BASE 
-         * @return long double 
+         * @return double 
          */
         long double Sqrt(long double __BASE) {
             if (__BASE == minInfinity) return NaN;
@@ -178,7 +194,7 @@ namespace MATH
         }
 
         /**
-         * @brief A function that returns the cube root of any number.
+         * @brief 
          * 
          * @param __BASE 
          * @return long double 
@@ -843,5 +859,4 @@ namespace MATH
             return true;
         }
     };
-
 }
