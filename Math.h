@@ -4,9 +4,9 @@
 #define MATH_H
 
 #include "Math.cpp"
-#include <iostream>
 
 namespace MATH {
+    class Str;
     class math;
 }
 
