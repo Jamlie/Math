@@ -5,9 +5,7 @@
 
 #include "Math.cpp"
 
-namespace MATH {
-    class Str;
-    class math;
-}
+class Str;
+class math;
 
 #endif
