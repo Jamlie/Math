@@ -5,18 +5,14 @@ Math Functions for C++
 git clone https://github.com/Jamlee977/Math
 ```
 
+You don't need to call a namespace anymore, nor creating an object.
+
 Put it in any folder that you want and call the header file.
 
-Inside your project, do:
+To start using it, do:
 ```
-using namespace MATH
+Math.(theMethodsYouWant);
 ```
-
-Then you can do something like:
-```
-math Math;
-```
-To start using those methods
 
 Use
 ```
