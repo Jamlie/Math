@@ -3,9 +3,15 @@
 #ifndef MATH_H
 #define MATH_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "Math.cpp"
 
-class Str;
 class math;
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif // MATH_H
