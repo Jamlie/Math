@@ -244,6 +244,7 @@ namespace MATH
          * @return double 
          */
         double Log10(double __LOG_10_NUMBER) {
+            if (__LOG_10_NUMBER < 0) return NaN;
             return ln(__LOG_10_NUMBER) / LN10;
         }
 
@@ -254,6 +255,7 @@ namespace MATH
          * @return double 
          */
         double Log2(double __LOG_2_NUMBER) {
+            if (__LOG_2_NUMBER < 0) return NaN;
             return ln(__LOG_2_NUMBER) / LN2;
         }
 
@@ -265,6 +267,7 @@ namespace MATH
          * @return double 
          */
         double Logn(double __NUM, double __NUMBER) {
+            if (__NUM < 0 || __NUMBER < 0) return NaN;
             return ln(__NUM) / ln(__NUMBER);
         }
 
@@ -847,7 +850,7 @@ namespace MATH
          * 
          * @param isPrimeInt  
          */
-        bool isPrime(int __IS_PRIME_INT) {
+        bool isPrime(unsigned int __IS_PRIME_INT) {
             if (__IS_PRIME_INT == Infinity) return 0;
             if (__IS_PRIME_INT == minInfinity) return 0;
             if (__IS_PRIME_INT == NaN) return NaN;
@@ -855,8 +858,34 @@ namespace MATH
             if (__IS_PRIME_INT == 0) return 0;
             if (__IS_PRIME_INT == 1) return 0;
             int i;
-            for (i = 2; i <= __IS_PRIME_INT / 2; i++) {if (__IS_PRIME_INT % i == 0) return false;}
+            for (i = 2; i <= __IS_PRIME_INT / 2; i++) if (__IS_PRIME_INT % i == 0) return false;
             return true;
+        }
+
+        /**
+         * @brief A fucntion that determines if a number is even.
+         * 
+         * @param __EVEN An integer number.
+         * @return int 
+         */
+        int isEven(int __EVEN) {
+            if (__EVEN == Infinity) return 0;
+            if (__EVEN == minInfinity) return 0;
+            if (__EVEN == NaN) return 0;
+            return __EVEN % 2 == 0;
+        }
+
+        /**
+         * @brief A function that determines if a number is odd.
+         * 
+         * @param __ODD An integer number.
+         * @return int 
+         */
+        int isOdd(int __ODD) {
+            if (__ODD == Infinity) return 0;
+            if (__ODD == minInfinity) return 0;
+            if (__ODD == NaN) return 0;
+            return __ODD % 2 != 0;
         }
     };
 }
