@@ -1,5 +1,7 @@
 #pragma once
 
+#include "src/str.h"
+
 #ifndef MATH_H
 #define MATH_H
 
