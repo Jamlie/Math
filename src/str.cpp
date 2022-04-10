@@ -72,10 +72,66 @@ private:
      * @param start The start of reading fractions.
      * @param end The End of reading fractions.
      * @param DIVISION The division value.
+     * @return float 
+     */
+    long double readLFractions(char __STRTOFRAC[], int start, int end, long double &DIVISION) {
+        long double FRACTIONS = 0;
+        int j, COUNT = 0;
+
+        for (int k = start; __STRTOFRAC[k] != '\0'; k++) {
+            if (__STRTOFRAC[start] == '0' && __STRTOFRAC[k] == '0') COUNT++;
+            if (COUNT == (end - start)) return 0;
+        }
+
+        for (int j = start; __STRTOFRAC[j] != '\0'; j++) {
+            if (__STRTOFRAC[j] > '9' || __STRTOFRAC[j] < '0') continue;
+            DIVISION = DIVISION * 10;
+            if(__STRTOFRAC[j] != '.') FRACTIONS = FRACTIONS * 10 + __STRTOFRAC[j] - '0';
+            
+        }
+        DIVISION = FRACTIONS / DIVISION;
+        return DIVISION;
+    }
+
+    /**
+     * @brief A function that reads how many fractions are there after (.).
+     * 
+     * @param __STRTOFRAC A string.
+     * @param start The start of reading fractions.
+     * @param end The End of reading fractions.
+     * @param DIVISION The division value.
      * @return double 
      */
     double readFractions(std::string __STRTOFRAC, int start, int end, double &DIVISION) {
         double FRACTIONS = 0;
+        int j;
+        int COUNT = 0;
+        for (int k = start; __STRTOFRAC[k] != '\0'; k++) {
+            if (__STRTOFRAC[start] == '0' && __STRTOFRAC[k] == '0') COUNT++;
+            if (COUNT == (end - start)) return 0;
+        }
+
+        for (int j = start; __STRTOFRAC[j] != '\0'; j++) {
+            if (__STRTOFRAC[j] > '9' || __STRTOFRAC[j] < '0') continue;
+            DIVISION = DIVISION * 10;
+            if(__STRTOFRAC[j] != '.') FRACTIONS = FRACTIONS * 10 + __STRTOFRAC[j] - '0';
+            
+        }
+        DIVISION = FRACTIONS / DIVISION;
+        return DIVISION;
+    }
+
+    /**
+     * @brief A function that reads how many fractions are there after (.).
+     * 
+     * @param __STRTOFRAC A string.
+     * @param start The start of reading fractions.
+     * @param end The End of reading fractions.
+     * @param DIVISION The division value.
+     * @return float 
+     */
+    long double readLFractions(std::string __STRTOFRAC, int start, int end, long double &DIVISION) {
+        long double FRACTIONS = 0;
         int j;
         int COUNT = 0;
         for (int k = start; __STRTOFRAC[k] != '\0'; k++) {
@@ -172,6 +228,26 @@ public:
     }
 
     /**
+     * @brief A function that receives a string and converts it to long long int.
+     * 
+     * @param __STRTOINT 
+     * @return long long int 
+     */
+    long long toLInt(std::string __STRTOINT) {
+        long long TOINT = 0;
+
+        for (int i = 0; __STRTOINT[i] != '\0'; i++) {
+            if (i == 0 && __STRTOINT[i] == '.') continue;
+            else if(__STRTOINT[i] == '.') break;
+            if (__STRTOINT[i] > '9' || __STRTOINT[i] < '0') continue;
+            TOINT = TOINT * 10 + __STRTOINT[i] - '0';
+        }
+
+        if (__STRTOINT[0] == '-') return -TOINT;
+        return TOINT;
+    }
+
+    /**
      * @brief A function that receives a string and converts it to int.
      * 
      * @param __STRTOINT 
@@ -179,6 +255,21 @@ public:
      */
     int toInt(char __STRTOINT[]) {
         int TOINT = 0;
+
+        for (int i = 0; __STRTOINT[i] != '\0'; i++) {
+            if (i == 0 && __STRTOINT[i] == '.') continue;
+            else if(__STRTOINT[i] == '.') break;
+            if (__STRTOINT[i] > '9' || __STRTOINT[i] < '0') continue;
+            TOINT = TOINT * 10 + __STRTOINT[i] - '0';
+        }
+
+        if (__STRTOINT[0] == '-') return -TOINT;
+        
+        return TOINT;
+    }
+
+    long long toLInt(char __STRTOINT[]) {
+        long long TOINT = 0;
 
         for (int i = 0; __STRTOINT[i] != '\0'; i++) {
             if (i == 0 && __STRTOINT[i] == '.') continue;
@@ -288,6 +379,38 @@ public:
     }
 
     /**
+     * @brief A function that receives a string and converts it to long double.
+     * 
+     * @param __STRTOREAL 
+     * @return long double 
+     */
+    long double toLDouble(char __STRTOREAL[]) {
+        long double TODOUBLE = 0, DIVISION = 1;
+        int i;
+        int LENGTH = len(__STRTOREAL);
+        for (i = 0; __STRTOREAL[i] != '\0'; i++) {
+            if (i == 0 && __STRTOREAL[i] == '.') continue;
+            if (i != 0 && __STRTOREAL[i] == '.') break;
+            if (__STRTOREAL[i] > '9' || __STRTOREAL[i] < '0') continue;
+            TODOUBLE = TODOUBLE * 10 + __STRTOREAL[i] - '0';
+        }
+    
+        if (__STRTOREAL[i] == '.') {
+            readLFractions(__STRTOREAL, i + 1, LENGTH, DIVISION);
+        }
+
+        TODOUBLE = TODOUBLE + DIVISION;
+
+        if (__STRTOREAL[0] == '-') {
+            if (TODOUBLE - (int)TODOUBLE == 0) return -1 * (TODOUBLE - 1);
+            return -TODOUBLE;
+        }
+
+        if (TODOUBLE - (int)TODOUBLE == 0) return TODOUBLE - 1;
+        return TODOUBLE;
+    }
+
+    /**
      * @brief A function that receives a string and converts it to double.
      * 
      * @param __STRTOREAL 
@@ -307,6 +430,38 @@ public:
 
         if (__STRTOREAL[i] == '.') {
             readFractions(__STRTOREAL, i + 1, LENGTH, DIVISION);
+        }
+
+        TODOUBLE = TODOUBLE + DIVISION;
+        if (__STRTOREAL[0] == '-') {
+            if (TODOUBLE - (int)TODOUBLE == 0) return -1 * (TODOUBLE - 1);
+            return -TODOUBLE;
+        }
+
+        if (TODOUBLE - (int)TODOUBLE == 0) return TODOUBLE - 1;
+        return TODOUBLE;
+    }
+
+    /**
+     * @brief A function that receives a string and converts it to long double.
+     * 
+     * @param __STRTOREAL 
+     * @return long double 
+     */
+    long double toLDouble(std::string __STRTOREAL) {
+        long double TODOUBLE = 0, DIVISION = 1;
+        int LENGTH = len(__STRTOREAL);
+        int i = 0, j;
+
+        for (i = 0; __STRTOREAL[i] != '\0'; i++) {
+            if (i == 0 && __STRTOREAL[i] == '.') continue;
+            if (i != 0 && __STRTOREAL[i] == '.') break;
+            if (__STRTOREAL[i] > '9' || __STRTOREAL[i] < '0') continue;
+            TODOUBLE = TODOUBLE * 10 + __STRTOREAL[i] - '0';
+        }
+
+        if (__STRTOREAL[i] == '.') {
+            readLFractions(__STRTOREAL, i + 1, LENGTH, DIVISION);
         }
 
         TODOUBLE = TODOUBLE + DIVISION;
