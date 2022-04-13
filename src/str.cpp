@@ -6,7 +6,7 @@ private:
     const float Infinity        =      ((float)(__HUGE_NUMBER * __HUGE_NUMBER));
     const float NaN             =      ((float)Infinity * 0.0F);
     const double minInfinity    =      Infinity * -1;
-
+    
     /**
      * @brief This function is used to get the length of an Array of Characters.
      * 
@@ -248,12 +248,54 @@ public:
     }
 
     /**
+     * @brief A function that receives a string and converts it to short int.
+     * 
+     * @param __STRTOINT 
+     * @return int 
+     */
+    short int toSInt(std::string __STRTOINT) {
+        int TOINT = 0;
+
+        for (int i = 0; __STRTOINT[i] != '\0'; i++) {
+            if (i == 0 && __STRTOINT[i] == '.') continue;
+            else if(__STRTOINT[i] == '.') break;
+            if (__STRTOINT[i] > '9' || __STRTOINT[i] < '0') continue;
+            TOINT = TOINT * 10 + __STRTOINT[i] - '0';
+        }
+
+        if (__STRTOINT[0] == '-') return -TOINT;
+        
+        return TOINT;
+    }
+
+    /**
      * @brief A function that receives a string and converts it to int.
      * 
      * @param __STRTOINT 
      * @return int 
      */
     int toInt(char __STRTOINT[]) {
+        int TOINT = 0;
+
+        for (int i = 0; __STRTOINT[i] != '\0'; i++) {
+            if (i == 0 && __STRTOINT[i] == '.') continue;
+            else if(__STRTOINT[i] == '.') break;
+            if (__STRTOINT[i] > '9' || __STRTOINT[i] < '0') continue;
+            TOINT = TOINT * 10 + __STRTOINT[i] - '0';
+        }
+
+        if (__STRTOINT[0] == '-') return -TOINT;
+        
+        return TOINT;
+    }
+
+    /**
+     * @brief A function that receives a string and converts it to short int.
+     * 
+     * @param __STRTOINT 
+     * @return int 
+     */
+    short int toSInt(char __STRTOINT[]) {
         int TOINT = 0;
 
         for (int i = 0; __STRTOINT[i] != '\0'; i++) {
