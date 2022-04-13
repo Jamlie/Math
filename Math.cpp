@@ -46,8 +46,36 @@ private:
         long double __RESULT = Exp(__SEMIRESULT);
         return __RESULT;
     }
+
+    /**
+     * @brief A function that reverses an array of integers.
+     * 
+     * @param toReverse 
+     * @param size 
+     */
+    void Reverse(double toReverse[], int size) {
+        int temp;
+
+        for(int i = 0; i < size / 2; i++){
+            temp = toReverse[i];
+            toReverse[i] = toReverse[size-i-1];
+            toReverse[size-i-1] = temp;
+        }
+    }
+    
+    /**
+     * @brief A function that returns the number of digits an unsigned integer has.
+     * 
+     * @param __GETLEN 
+     * @return int 
+     */
+    int Len(unsigned int __GETLEN) {
+        int __LEN = Log10(__GETLEN) + 1;
+        return __LEN;
+    }
     
 public:
+
     const float Infinity        =      ((float)(__HUGE_NUMBER * __HUGE_NUMBER));
     const float NaN             =      ((float)Infinity * 0.0F);
     const double minInfinity    =      Infinity * -1;
@@ -302,12 +330,12 @@ public:
      * @param __NUM 
      * @return long double 
      */
-    long double Exp(double __NUM) {
+    long double Exp(long double __NUM) {
         if (__NUM == Infinity) return Infinity;
         if (__NUM == minInfinity) return 0;
         if (__NUM == NaN) return NaN;
         long double __SEMIRESULT = 0;
-        for (int i = 1; i <= 35; i++) {
+        for (int i = 1; i <= 1000; i++) {
             long double POWER = Pow(__NUM, i);
             long double FACT = Fact(i);
             __SEMIRESULT += (POWER / FACT);
@@ -810,6 +838,66 @@ public:
         if (__ODD == minInfinity) return 0;
         if (__ODD == NaN) return 0;
         return __ODD % 2 != 0;
+    }
+
+    /**
+     * @brief A function that returns the number of digits an integer has
+     * 
+     * @param __DIGITS 
+     * @return int 
+     */
+    int Digits(int __DIGITS) {
+        if (__DIGITS < 0) return Log10(-__DIGITS) + 1;
+        return Log10(__DIGITS) + 1;
+    }
+
+    /**
+     * @brief A function that converts an unsigned integer into a string
+     * 
+     * @param __TOSTRING 
+     * @return std::string 
+     */
+    std::string toString(unsigned int __TOSTRING) {
+        int LEN = Len(__TOSTRING);
+        double *ARR = new double[LEN];
+        int digits;
+        char CHAR[15];
+        int i = 0;
+
+        while (__TOSTRING > 0) {
+            digits = (int)__TOSTRING % 10;
+            __TOSTRING = (int)__TOSTRING / 10;
+            ARR[i] = digits;
+            i++;
+        }
+
+        Reverse(ARR, LEN);
+        
+        for (i = 0; i < LEN; i++) {
+            CHAR[i] = ARR[i] + '0';
+        }
+        if (i == LEN) CHAR[i] = '\0';
+
+        delete[] ARR;
+        return CHAR;
+    }
+
+    /**
+     * @brief A function that splits a double number into the integer and its fraction.
+     * 
+     * @param NUMBER 
+     * @param FRAC 
+     */
+    long double Modf(long double &NUMBER, long double &FRAC) {
+        if (NUMBER == Infinity || NUMBER == minInfinity) return 0;
+        if (NUMBER == NaN) return NaN;
+        if (NUMBER - (int)NUMBER == 0) {
+            FRAC = 0;
+            NUMBER = (int)NUMBER;
+        } else {
+            FRAC = NUMBER - (int)NUMBER;
+            NUMBER = (int)NUMBER;
+        }
     }
     
 } Math;
