@@ -339,13 +339,13 @@ public:
      * @param __NUM 
      * @return long double 
      */
-    long double Exp(long double __NUM) {
-        if (__NUM == Infinity) return Infinity;
-        if (__NUM == minInfinity) return 0;
-        if (__NUM == NaN) return NaN;
+    long double Exp(long double __EXPO) {
+        if (__EXPO == Infinity) return Infinity;
+        if (__EXPO == minInfinity) return 0;
+        if (__EXPO == NaN) return NaN;
         long double __SEMIRESULT = 0;
         for (int i = 1; i <= 1300; i++) {
-            long double POWER = Pow(__NUM, i);
+            long double POWER = Pow(__EXPO, i);
             long double FACT = Fact(i);
             __SEMIRESULT += (POWER / FACT);
         }
@@ -359,7 +359,7 @@ public:
      * @param __NUMBER 
      * @return double 
      */
-    double Cos(double __NUMBER) {
+    double  (double __NUMBER) {
         if (__NUMBER == NaN || __NUMBER == Infinity || __NUMBER == minInfinity) return NaN;
         for (int i = 0; i < __MINIMUMVALUE && __NUMBER > 360; i++) {
             if (__NUMBER > 360) {
