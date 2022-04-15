@@ -1,6 +1,6 @@
 #pragma once
 
-#include "src/str.h"
+#include "src/str.hpp"
 
 #ifndef MATH_H
 #define MATH_H
