@@ -122,7 +122,8 @@ public:
      * @param __TO_POSITIVE 
      * @return long double 
      */
-    long double Abs(long double __TO_POSITIVE) {
+    template <typename T>
+    T Abs(T __TO_POSITIVE) {
         if (__TO_POSITIVE < 0) {
             __TO_POSITIVE = __TO_POSITIVE * -1;
         }
@@ -138,7 +139,7 @@ public:
      * @param __FLOOR 
      * @return int 
      */
-    int Floor(double __FLOOR) {
+    long long Floor(long double __FLOOR) {
         int __VALUE;
         if (__FLOOR < 0) {
             __VALUE = (int)__FLOOR + (-1);
@@ -153,7 +154,7 @@ public:
      * @param __CEIL 
      * @return int 
      */
-    int Ceil(double __CEIL) {
+    long long Ceil(long double __CEIL) {
         if (__CEIL - (int)__CEIL == 0) return __CEIL;
         else return Floor(__CEIL) + 1;
     }
@@ -164,7 +165,7 @@ public:
      * @param __FACT 
      * @return long double 
      */
-    long double Fact(long long __FACT) {
+    long double Fact(unsigned int __FACT) {
         if (__FACT == NaN) return 1;
         if (__FACT == Infinity) return Infinity;
         if (__FACT == minInfinity) return NaN;
@@ -202,31 +203,39 @@ public:
     }
 
     /**
-     * @brief A function that returns the value of the natural log of a number.
+     * @brief A function that brings the natural log of any number.
      * 
      * @param __NUMBER 
      * @return double 
      */
-    double ln(double number) {
-        if (number < 0) return NaN;
-        if (number == 0) return minInfinity;
-        if (number == Infinity) return Infinity;
+    double ln(double __NUMBER) {
+        if (__NUMBER == Infinity) return Infinity;
+        if (__NUMBER <= 0) return NaN;
+        if (__NUMBER == NaN) return NaN;
     
-        double __SUM = 0.0;
-        double ONE_OVER_ONE = (number - 1) / (number + 1);
-        double __ONE_OVER_ONE_2 = ONE_OVER_ONE * ONE_OVER_ONE;
-        double __DENOMINATOR = 1.0;
-        double __FRACTION = ONE_OVER_ONE;
-        double __TERM = __FRACTION;
-        double __NEW_SUM = __TERM;
-        while (__NEW_SUM != __SUM)
-        {
-            __SUM = __NEW_SUM;
-            __DENOMINATOR += 2.0;
-            __FRACTION *= __ONE_OVER_ONE_2;
-            __NEW_SUM += __FRACTION / __DENOMINATOR;
+        int powerAdjust = 0;
+        while (__NUMBER > 1.0) {
+            __NUMBER /= E;
+            powerAdjust++;
         }
-        return 2.0 * __NEW_SUM;
+        while (__NUMBER < 0.25) {
+            __NUMBER *= E;
+            powerAdjust--;
+        }
+        
+        __NUMBER -= 1.0;
+
+        double SEMI_RESULT = 0.0;
+        double oneMinusOne = 1.0;
+        double numberHandler = __NUMBER;
+
+        for (int i = 1; i <= 20; i++) {
+            SEMI_RESULT += numberHandler * oneMinusOne / i;
+            numberHandler *= __NUMBER;
+            oneMinusOne = -oneMinusOne;
+        }
+        
+        return SEMI_RESULT + powerAdjust;
     }
 
     /**
@@ -312,7 +321,7 @@ public:
                 __RESULT = __RESULT * (1 / __BASE);
                 __EXPO++;
             }
-            return (long double)__RESULT;
+            return __RESULT;
         }
         
         while (__EXPO != 0)
@@ -320,7 +329,7 @@ public:
             __RESULT = __RESULT * __BASE;
             __EXPO--;
         }
-        return (long double)__RESULT;
+        return __RESULT;
         
     }
 
@@ -667,7 +676,7 @@ public:
      * @param __NUM 
      * @return long double 
      */
-    long double Round(long double __NUM) {
+    long long Round(long double __NUM) {
         if (__NUM == Infinity) return Infinity;
         if (__NUM == minInfinity) return minInfinity;
         if (__NUM == NaN) return NaN;
