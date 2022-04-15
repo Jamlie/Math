@@ -359,7 +359,7 @@ public:
      * @param __NUMBER 
      * @return double 
      */
-    double  (double __NUMBER) {
+    double Cos(double __NUMBER) {
         if (__NUMBER == NaN || __NUMBER == Infinity || __NUMBER == minInfinity) return NaN;
         for (int i = 0; i < __MINIMUMVALUE && __NUMBER > 360; i++) {
             if (__NUMBER > 360) {
