@@ -335,7 +335,7 @@ public:
         if (__NUM == minInfinity) return 0;
         if (__NUM == NaN) return NaN;
         long double __SEMIRESULT = 0;
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 1300; i++) {
             long double POWER = Pow(__NUM, i);
             long double FACT = Fact(i);
             __SEMIRESULT += (POWER / FACT);
@@ -849,37 +849,6 @@ public:
     int Digits(int __DIGITS) {
         if (__DIGITS < 0) return Log10(-__DIGITS) + 1;
         return Log10(__DIGITS) + 1;
-    }
-
-    /**
-     * @brief A function that converts an unsigned integer into a string
-     * 
-     * @param __TOSTRING 
-     * @return std::string 
-     */
-    std::string toString(unsigned int __TOSTRING) {
-        int LEN = Len(__TOSTRING);
-        double *ARR = new double[LEN];
-        int digits;
-        char CHAR[15];
-        int i = 0;
-
-        while (__TOSTRING > 0) {
-            digits = (int)__TOSTRING % 10;
-            __TOSTRING = (int)__TOSTRING / 10;
-            ARR[i] = digits;
-            i++;
-        }
-
-        Reverse(ARR, LEN);
-        
-        for (i = 0; i < LEN; i++) {
-            CHAR[i] = ARR[i] + '0';
-        }
-        if (i == LEN) CHAR[i] = '\0';
-
-        delete[] ARR;
-        return CHAR;
     }
 
     /**
