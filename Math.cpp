@@ -78,7 +78,7 @@ public:
 
     const float Infinity        =      ((float)(__HUGE_NUMBER * __HUGE_NUMBER));
     const float NaN             =      ((float)Infinity * 0.0F);
-    const double minInfinity    =      Infinity * -1;
+    const float minInfinity     =      Infinity * -1;
     const double Pi             =      3.14159265358979;
     const double E              =      2.71828182845904;
     const double LN10           =      2.30258509299404;
