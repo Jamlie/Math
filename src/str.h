@@ -1,14 +1,13 @@
 #pragma once
+#include <iostream>
 
-#include "src/str.h"
-
-#ifndef MATH_H
-#define MATH_H
+#ifndef STR_H
+#define STR_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "Math.cpp"
+#include "str.cpp"
 
 class math;
 
@@ -16,4 +15,4 @@ class math;
 }
 #endif
 
-#endif // MATH_H
+#endif // STR_H
