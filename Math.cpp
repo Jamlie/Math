@@ -1,5 +1,5 @@
 // Omar Estietie
-#include "src/str.h"
+#include "src/str.hpp"
 
 /**
  * @brief A math-class that can be used to do math operation.
