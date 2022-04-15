@@ -1,5 +1,8 @@
 #include <iostream>
 
+/**
+ * @brief This is a library from converting from strings to numbers
+ */
 class Str {
 private: 
     const double __HUGE_NUMBER  =      1e+308;
